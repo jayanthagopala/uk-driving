@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Roundabouts Mastery - Driving Test Preparation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #666;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .nav-tab:hover {
+            background-color: #e9ecef;
+        }
+
+        .nav-tab.active:hover {
+            background-color: #0056b3;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .roundabout-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .roundabout-card {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .roundabout-card:hover {
+            border-color: #007bff;
+            box-shadow: 0 10px 20px rgba(0,123,255,0.1);
+            transform: translateY(-5px);
+        }
+
+        .roundabout-card h3 {
+            color: #007bff;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .roundabout-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .features-list li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .interactive-roundabout {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .roundabout-visual {
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+            position: relative;
+            background: radial-gradient(circle, #f8f9fa 60%, #007bff 62%, #007bff 65%, transparent 67%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .roundabout-center {
+            width: 240px;
+            height: 240px;
+            background: #28a745;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .exit-marker {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #ffc107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .exit-1 { top: -20px; left: 50%; transform: translateX(-50%); }
+        .exit-2 { right: -20px; top: 50%; transform: translateY(-50%); }
+        .exit-3 { bottom: -20px; left: 50%; transform: translateX(-50%); }
+        .exit-4 { left: -20px; top: 50%; transform: translateY(-50%); }
+
+        .lane-controls {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .lane-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .lane-btn:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .lane-btn.active {
+            background: #28a745;
+        }
+
+        .rules-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .rules-section h3 {
+            color: #007bff;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .rule-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 5px solid #007bff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .rule-item h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-section {
+            margin-top: 2rem;
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+
+        .question-card h3 {
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+
+        .answer-options {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .answer-options li {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .answer-options li:hover {
+            border-color: #007bff;
+            background: #e3f2fd;
+        }
+
+        .answer-options li.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .answer-options li.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .common-mistakes {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .common-mistakes h3 {
+            color: #856404;
+            margin-bottom: 1rem;
+        }
+
+        .mistake-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 5px solid #ffc107;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+        }
+
+        /* Visual Quiz Styles */
+        .visual-quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .quiz-roundabout {
+            width: 500px;
+            height: 500px;
+            margin: 2rem auto;
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 50px;
+        }
+
+        .roundabout-road {
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+            position: relative;
+            background: radial-gradient(circle, #e9ecef 50%, #007bff 52%, #007bff 55%, #e9ecef 57%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-roundabout-center {
+            width: 200px;
+            height: 200px;
+            background: #28a745;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .quiz-exit-marker {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: #ffc107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border: 4px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            font-size: 0.9rem;
+        }
+
+        .quiz-exit-1 { left: -25px; top: 50%; transform: translateY(-50%); }
+        .quiz-exit-2 { top: -25px; left: 50%; transform: translateX(-50%); }
+        .quiz-exit-3 { right: -25px; top: 50%; transform: translateY(-50%); }
+        .quiz-exit-4 { bottom: -25px; left: 50%; transform: translateX(-50%); }
+
+        .target-exit {
+            background: #dc3545 !important;
+        }
+
+        .quiz-exit-1.target-exit {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1) translateY(-50%); }
+            50% { transform: scale(1.1) translateY(-50%); }
+            100% { transform: scale(1) translateY(-50%); }
+        }
+
+        .quiz-exit-2.target-exit {
+            animation: pulse-top 1.5s infinite;
+        }
+
+        @keyframes pulse-top {
+            0% { transform: scale(1) translateX(-50%); }
+            50% { transform: scale(1.1) translateX(-50%); }
+            100% { transform: scale(1) translateX(-50%); }
+        }
+
+        .quiz-exit-3.target-exit {
+            animation: pulse-right 1.5s infinite;
+        }
+
+        @keyframes pulse-right {
+            0% { transform: scale(1) translateY(-50%); }
+            50% { transform: scale(1.1) translateY(-50%); }
+            100% { transform: scale(1) translateY(-50%); }
+        }
+
+        .quiz-exit-4.target-exit {
+            animation: pulse-bottom 1.5s infinite;
+        }
+
+        @keyframes pulse-bottom {
+            0% { transform: scale(1) translateX(-50%); }
+            50% { transform: scale(1.1) translateX(-50%); }
+            100% { transform: scale(1) translateX(-50%); }
+        }
+
+        .approach-lanes {
+            position: absolute;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+        }
+
+        .lane {
+            width: 60px;
+            height: 100px;
+            background: #6c757d;
+            border: 3px solid #495057;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .lane:hover {
+            background: #007bff;
+            border-color: #0056b3;
+            transform: translateY(-5px);
+        }
+
+        .lane.selected {
+            background: #28a745;
+            border-color: #1e7e34;
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .lane.correct {
+            background: #28a745;
+            border-color: #1e7e34;
+            animation: correct-flash 0.5s ease;
+        }
+
+        .lane.incorrect {
+            background: #dc3545;
+            border-color: #c82333;
+            animation: incorrect-shake 0.5s ease;
+        }
+
+        @keyframes correct-flash {
+            0%, 100% { background: #28a745; }
+            50% { background: #40e967; }
+        }
+
+        @keyframes incorrect-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .lane-label {
+            position: absolute;
+            bottom: -25px;
+            font-size: 0.8rem;
+            color: #333;
+            font-weight: normal;
+        }
+
+        .quiz-question {
+            background: #007bff;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .quiz-feedback {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            display: none;
+        }
+
+        .quiz-feedback.correct {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+
+        .quiz-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #e3f2fd;
+            border-radius: 10px;
+        }
+
+        .road-markings {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2px;
+            opacity: 0.7;
+        }
+
+        .road-marking {
+            width: 40px;
+            height: 4px;
+            background: white;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+
+            .roundabout-visual {
+                width: 300px;
+                height: 300px;
+            }
+
+            .roundabout-center {
+                width: 180px;
+                height: 180px;
+            }
+
+            .roundabout-types {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-roundabout {
+                width: 350px;
+                height: 350px;
+                padding: 30px;
+            }
+
+            .roundabout-road {
+                width: 290px;
+                height: 290px;
+            }
+
+            .quiz-roundabout-center {
+                width: 150px;
+                height: 150px;
+            }
+
+            .lane {
+                width: 50px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚗 UK Roundabouts Mastery</h1>
+            <p class="subtitle">Master roundabout navigation for your UK driving test</p>
+        </header>
+
+        <div class="main-content">
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('types')">Roundabout Types</button>
+                <button class="nav-tab" onclick="showTab('rules')">Lane Rules</button>
+                <button class="nav-tab" onclick="showTab('interactive')">Interactive Guide</button>
+                <button class="nav-tab" onclick="showTab('visual-quiz')">Visual Quiz</button>
+                <button class="nav-tab" onclick="showTab('practice')">Practice Questions</button>
+                <button class="nav-tab" onclick="showTab('mistakes')">Common Mistakes</button>
+            </div>
+
+            <!-- Roundabout Types Tab -->
+            <div id="types" class="tab-content active">
+                <h2>Types of UK Roundabouts</h2>
+                <div class="roundabout-types">
+                    <div class="roundabout-card">
+                        <h3>Single-Lane Roundabouts</h3>
+                        <p>The most common type with one lane for all traffic. Found in residential areas and smaller towns.</p>
+                        <ul class="features-list">
+                            <li>One lane only - no lane confusion</li>
+                            <li>Easier for learner drivers</li>
+                            <li>Give way to traffic from right</li>
+                            <li>Clear signalling required</li>
+                        </ul>
+                    </div>
+
+                    <div class="roundabout-card">
+                        <h3>Multi-Lane Roundabouts</h3>
+                        <p>Two or more lanes designed for higher traffic volumes. Require careful lane discipline.</p>
+                        <ul class="features-list">
+                            <li>Multiple lane choices</li>
+                            <li>Lane markings show correct positioning</li>
+                            <li>Higher traffic capacity</li>
+                            <li>More complex navigation</li>
+                        </ul>
+                    </div>
+
+                    <div class="roundabout-card">
+                        <h3>Mini Roundabouts</h3>
+                        <p>Smaller versions with painted white circles, often in residential areas.</p>
+                        <ul class="features-list">
+                            <li>White painted dome in center</li>
+                            <li>Must drive around center (not over)</li>
+                            <li>Less space to manoeuvre</li>
+                            <li>Avoid U-turns</li>
+                        </ul>
+                    </div>
+
+                    <div class="roundabout-card">
+                        <h3>Turbo Roundabouts</h3>
+                        <p>Advanced design with raised lane dividers that prevent lane changing once entered.</p>
+                        <ul class="features-list">
+                            <li>Lane choice made before entering</li>
+                            <li>No lane changing on roundabout</li>
+                            <li>Improved safety and efficiency</li>
+                            <li>Clear lane markings</li>
+                        </ul>
+                    </div>
+
+                    <div class="roundabout-card">
+                        <h3>Magic Roundabouts</h3>
+                        <p>Complex systems with multiple mini-roundabouts around a central roundabout (e.g., Swindon).</p>
+                        <ul class="features-list">
+                            <li>Multiple mini-roundabouts</li>
+                            <li>Clockwise and anti-clockwise flow</li>
+                            <li>Treat each mini-roundabout separately</li>
+                            <li>Follow signs carefully</li>
+                        </ul>
+                    </div>
+
+                    <div class="roundabout-card">
+                        <h3>Traffic Light Controlled</h3>
+                        <p>Roundabouts with traffic lights to control flow during peak times.</p>
+                        <ul class="features-list">
+                            <li>Traffic lights control entry</li>
+                            <li>Stop when lights are red</li>
+                            <li>Still give way to traffic from right</li>
+                            <li>Used in busy areas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lane Rules Tab -->
+            <div id="rules" class="tab-content">
+                <div class="rules-section">
+                    <h3>Essential Lane Selection Rules</h3>
+                    
+                    <div class="rule-item">
+                        <h4>🔄 First Exit (Turning Left)</h4>
+                        <p><strong>Lane:</strong> Use left lane<br>
+                        <strong>Signal:</strong> Signal left on approach and keep signalling left throughout<br>
+                        <strong>Position:</strong> Stay in left lane on roundabout</p>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4>➡️ Second Exit (Straight Ahead)</h4>
+                        <p><strong>Lane:</strong> Usually left lane (unless markings indicate otherwise)<br>
+                        <strong>Signal:</strong> No signal on approach, signal left after passing first exit<br>
+                        <strong>Position:</strong> Stay in chosen lane</p>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4>↗️ Third Exit and Beyond (Right Turn)</h4>
+                        <p><strong>Lane:</strong> Use right lane<br>
+                        <strong>Signal:</strong> Signal right on approach, then signal left after passing the exit before yours<br>
+                        <strong>Position:</strong> Stay in right lane until ready to exit</p>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4>⚠️ Golden Rule</h4>
+                        <p><strong>Always give way to traffic approaching from your right</strong><br>
+                        This is the fundamental rule that applies to all UK roundabouts unless signs or lights indicate otherwise.</p>
+                    </div>
+                </div>
+
+                <div class="rules-section">
+                    <h3>Mirror-Signal-Manoeuvre (MSM) Routine</h3>
+                    
+                    <div class="rule-item">
+                        <h4>1. Mirrors 🪞</h4>
+                        <p>Check interior mirror, then appropriate door mirror. For left turns check left mirror, for right turns check right mirror.</p>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4>2. Signal 🔔</h4>
+                        <p>Give clear signals early enough to warn other road users of your intentions, but not so early as to confuse them.</p>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4>3. Manoeuvre 🚗</h4>
+                        <p>Position your vehicle correctly, adjust speed appropriately, and execute the manoeuvre safely.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Guide Tab -->
+            <div id="interactive" class="tab-content">
+                <h2>Interactive Roundabout Guide</h2>
+                <p>Select your intended exit to see the correct lane positioning and signalling:</p>
+                
+                <div class="interactive-roundabout">
+                    <div class="roundabout-visual" id="roundaboutVisual">
+                        <div class="roundabout-center">Roundabout</div>
+                        <div class="exit-marker exit-1">1st</div>
+                        <div class="exit-marker exit-2">2nd</div>
+                        <div class="exit-marker exit-3">3rd</div>
+                        <div class="exit-marker exit-4">4th</div>
+                    </div>
+
+                    <div class="lane-controls">
+                        <button class="lane-btn" onclick="showLaneGuidance(1)">1st Exit (Left)</button>
+                        <button class="lane-btn" onclick="showLaneGuidance(2)">2nd Exit (Straight)</button>
+                        <button class="lane-btn" onclick="showLaneGuidance(3)">3rd Exit (Right)</button>
+                        <button class="lane-btn" onclick="showLaneGuidance(4)">4th Exit (Right)</button>
+                    </div>
+
+                    <div id="laneGuidance" class="rules-section" style="display: none;">
+                        <h3 id="guidanceTitle">Select an exit above</h3>
+                        <div id="guidanceContent">
+                            <p>Click one of the exit buttons to see detailed guidance for that manoeuvre.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Quiz Tab -->
+            <div id="visual-quiz" class="tab-content">
+                <h2>Visual Lane Selection Quiz</h2>
+                <p>Click on the correct lane to approach the roundabout for your intended exit</p>
+                
+                <div class="visual-quiz-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="visualProgressFill" style="width: 0%"></div>
+                    </div>
+                    <p id="visualProgressText">Question 0 of 8 - 0% Complete</p>
+                    
+                    <div class="quiz-question" id="visualQuizQuestion">
+                        Click "Start Visual Quiz" to begin
+                    </div>
+
+                    <div class="quiz-roundabout" id="visualQuizRoundabout">
+                        <div class="roundabout-road">
+                            <div class="quiz-roundabout-center">Roundabout</div>
+                            <div class="quiz-exit-marker quiz-exit-1" id="quizExit1">1st</div>
+                            <div class="quiz-exit-marker quiz-exit-2" id="quizExit2">2nd</div>
+                            <div class="quiz-exit-marker quiz-exit-3" id="quizExit3">3rd</div>
+                            <div class="quiz-exit-marker quiz-exit-4" id="quizExit4">4th</div>
+                        </div>
+                        
+                        <div class="approach-lanes">
+                            <div class="lane" id="leftLane" onclick="selectLane('left')">
+                                <span>L</span>
+                                <div class="lane-label">Left Lane</div>
+                            </div>
+                            <div class="lane" id="rightLane" onclick="selectLane('right')">
+                                <span>R</span>
+                                <div class="lane-label">Right Lane</div>
+                            </div>
+                        </div>
+
+                        <div class="road-markings">
+                            <div class="road-marking"></div>
+                            <div class="road-marking"></div>
+                            <div class="road-marking"></div>
+                            <div class="road-marking"></div>
+                            <div class="road-marking"></div>
+                        </div>
+                    </div>
+
+                    <div class="quiz-feedback" id="visualQuizFeedback">
+                        <!-- Feedback will be inserted here -->
+                    </div>
+
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <button class="lane-btn" id="startVisualQuizBtn" onclick="startVisualQuiz()">Start Visual Quiz</button>
+                        <button class="lane-btn" id="nextVisualBtn" onclick="nextVisualQuestion()" style="display: none;">Next Question</button>
+                        <button class="lane-btn" id="restartVisualBtn" onclick="startVisualQuiz()" style="display: none;">Restart Visual Quiz</button>
+                    </div>
+
+                    <div class="quiz-score" id="visualQuizScore" style="display: none;">
+                        Score: <span id="visualScoreDisplay">0/0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Practice Questions Tab -->
+            <div id="practice" class="tab-content">
+                <h2>Practice Questions</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <p id="progressText">Question 0 of 10 - 0% Complete</p>
+
+                <div class="quiz-section" id="quizContainer">
+                    <!-- Questions will be populated by JavaScript -->
+                </div>
+
+                <div style="text-align: center; margin: 2rem 0;">
+                    <button class="lane-btn" id="nextBtn" onclick="nextQuestion()" style="display: none;">Next Question</button>
+                    <button class="lane-btn" id="restartBtn" onclick="startQuiz()" style="display: none;">Restart Quiz</button>
+                </div>
+            </div>
+
+            <!-- Common Mistakes Tab -->
+            <div id="mistakes" class="tab-content">
+                <div class="common-mistakes">
+                    <h3>⚠️ Most Common Roundabout Mistakes</h3>
+                    <p>Avoid these frequent errors that cause driving test failures:</p>
+
+                    <div class="mistake-item">
+                        <h4>1. Incorrect Lane Positioning</h4>
+                        <p>Using the left lane for right turns or right lane for left turns. Always check road markings and signs before entering.</p>
+                    </div>
+
+                    <div class="mistake-item">
+                        <h4>2. Poor Signalling</h4>
+                        <p>Not signalling when exiting, signalling too early or too late, or forgetting to cancel signals after exiting.</p>
+                    </div>
+
+                    <div class="mistake-item">
+                        <h4>3. Failing to Give Way</h4>
+                        <p>Not giving priority to traffic from the right, or misjudging the speed of approaching vehicles.</p>
+                    </div>
+
+                    <div class="mistake-item">
+                        <h4>4. Inadequate Observations</h4>
+                        <p>Not checking mirrors before entering or exiting, missing blind spot checks, or not looking right when approaching.</p>
+                    </div>
+
+                    <div class="mistake-item">
+                        <h4>5. Cutting Across Lanes</h4>
+                        <p>Changing lanes suddenly on the roundabout without proper mirror checks and signals, often due to being in wrong lane initially.</p>
+                    </div>
+
+                    <div class="mistake-item">
+                        <h4>6. Speed Issues</h4>
+                        <p>Approaching too fast without proper speed adjustment, or hesitating unnecessarily when it's safe to proceed.</p>
+                    </div>
+
+                    <div class="mistake-item">
+                        <h4>7. Mini-Roundabout Errors</h4>
+                        <p>Driving straight over the painted center instead of going around it, or attempting U-turns on mini-roundabouts.</p>
+                    </div>
+
+                    <div class="mistake-item">
+                        <h4>8. Following Road Markings</h4>
+                        <p>Ignoring lane arrows and road markings, or straddling lanes when clear markings are present.</p>
+                    </div>
+                </div>
+
+                <div class="rules-section">
+                    <h3>💡 Pro Tips for Success</h3>
+                    
+                    <div class="rule-item">
+                        <h4>Plan Ahead</h4>
+                        <p>Look for road signs and lane markings early. Decide which exit you need and get into the correct lane well before the roundabout.</p>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4>Stay Calm</h4>
+                        <p>If you're in the wrong lane, don't panic. It's safer to continue in your current lane and go around again than to cut across traffic.</p>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4>Practice Different Types</h4>
+                        <p>Get experience with various roundabout types during lessons - single-lane, multi-lane, mini-roundabouts, and busy junctions.</p>
+                    </div>
+
+                    <div class="rule-item">
+                        <h4>Master the MSM Routine</h4>
+                        <p>Make Mirror-Signal-Manoeuvre second nature. Good observations and clear signalling are key to roundabout success.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Interactive roundabout guidance
+        function showLaneGuidance(exitNumber) {
+            const guidance = document.getElementById('laneGuidance');
+            const title = document.getElementById('guidanceTitle');
+            const content = document.getElementById('guidanceContent');
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.lane-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const guidanceData = {
+                1: {
+                    title: "1st Exit - Turning Left",
+                    content: `
+                        <div class="rule-item">
+                            <h4>🚗 Lane Position</h4>
+                            <p>Use the <strong>left lane</strong> when approaching the roundabout.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>🔔 Signalling</h4>
+                            <p>Signal <strong>left</strong> on approach and <strong>keep signalling left</strong> throughout the manoeuvre.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>🪞 Observations</h4>
+                            <p>Check interior mirror, then left mirror. Look right before entering. Check left mirror before exiting.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>⚠️ Key Points</h4>
+                            <p>Stay in left lane throughout. Give way to traffic from right. Signal continuously until you exit.</p>
+                        </div>
+                    `
+                },
+                2: {
+                    title: "2nd Exit - Going Straight Ahead",
+                    content: `
+                        <div class="rule-item">
+                            <h4>🚗 Lane Position</h4>
+                            <p>Usually use the <strong>left lane</strong> unless road markings indicate otherwise.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>🔔 Signalling</h4>
+                            <p><strong>No signal</strong> on approach. Signal <strong>left</strong> after passing the 1st exit.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>🪞 Observations</h4>
+                            <p>Check interior mirror, then left mirror. Look right before entering. Check mirrors before signalling to exit.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>⚠️ Key Points</h4>
+                            <p>Stay in chosen lane. Don't signal too early. Some larger roundabouts may have dedicated straight-ahead lanes.</p>
+                        </div>
+                    `
+                },
+                3: {
+                    title: "3rd Exit - Turning Right",
+                    content: `
+                        <div class="rule-item">
+                            <h4>🚗 Lane Position</h4>
+                            <p>Use the <strong>right lane</strong> when approaching the roundabout.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>🔔 Signalling</h4>
+                            <p>Signal <strong>right</strong> on approach. Change to signal <strong>left</strong> after passing the 2nd exit.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>🪞 Observations</h4>
+                            <p>Check interior mirror, then right mirror on approach. Check left mirror and blind spot when moving to exit.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>⚠️ Key Points</h4>
+                            <p>Stay in right lane until ready to exit. Change signal timing is crucial. May need to change lanes to exit safely.</p>
+                        </div>
+                    `
+                },
+                4: {
+                    title: "4th Exit - Sharp Right/U-Turn",
+                    content: `
+                        <div class="rule-item">
+                            <h4>🚗 Lane Position</h4>
+                            <p>Use the <strong>right lane</strong> when approaching the roundabout.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>🔔 Signalling</h4>
+                            <p>Signal <strong>right</strong> on approach. Change to signal <strong>left</strong> after passing the 3rd exit.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>🪞 Observations</h4>
+                            <p>Continuous mirror checks needed. Check right mirror on approach, left mirror and blind spot when exiting.</p>
+                        </div>
+                        <div class="rule-item">
+                            <h4>⚠️ Key Points</h4>
+                            <p>This is essentially a U-turn. Stay in right lane longer. Be especially careful of other traffic when exiting.</p>
+                        </div>
+                    `
+                }
+            };
+            
+            title.textContent = guidanceData[exitNumber].title;
+            content.innerHTML = guidanceData[exitNumber].content;
+            guidance.style.display = 'block';
+        }
+
+        // Quiz functionality
+        const quizQuestions = [
+            {
+                question: "Which lane should you use when taking the first exit (turning left) at a roundabout?",
+                options: [
+                    "Right lane",
+                    "Left lane",
+                    "Either lane",
+                    "Middle lane"
+                ],
+                correct: 1,
+                explanation: "Always use the left lane when turning left (first exit) at a roundabout."
+            },
+            {
+                question: "When going straight ahead at a roundabout (2nd exit), when should you signal?",
+                options: [
+                    "Signal right on approach",
+                    "Signal left on approach",
+                    "No signal on approach, signal left after 1st exit",
+                    "No signalling needed"
+                ],
+                correct: 2,
+                explanation: "When going straight ahead, don't signal on approach. Signal left after passing the first exit."
+            },
+            {
+                question: "At a roundabout, you must give way to traffic coming from:",
+                options: [
+                    "The left",
+                    "The right",
+                    "Straight ahead",
+                    "All directions equally"
+                ],
+                correct: 1,
+                explanation: "The golden rule: always give way to traffic approaching from your right."
+            },
+            {
+                question: "When taking the 3rd exit (turning right), which lane should you use?",
+                options: [
+                    "Left lane",
+                    "Middle lane",
+                    "Right lane",
+                    "Any available lane"
+                ],
+                correct: 2,
+                explanation: "Use the right lane when turning right (3rd exit or beyond) at a roundabout."
+            },
+            {
+                question: "What should you do at a mini-roundabout with a painted white circle?",
+                options: [
+                    "Drive straight over it",
+                    "Stop and wait",
+                    "Go around it, even if it means a tight turn",
+                    "Reverse away from it"
+                ],
+                correct: 2,
+                explanation: "You must go around the painted center of a mini-roundabout, not drive over it."
+            },
+            {
+                question: "When turning right at a roundabout, when should you change your signal from right to left?",
+                options: [
+                    "As soon as you enter the roundabout",
+                    "Halfway around the roundabout",
+                    "After passing the exit before the one you want",
+                    "Only when you're about to exit"
+                ],
+                correct: 2,
+                explanation: "Change from right signal to left signal after passing the exit before your intended exit."
+            },
+            {
+                question: "What does MSM stand for in roundabout navigation?",
+                options: [
+                    "Move-Signal-Manoeuvre",
+                    "Mirror-Signal-Manoeuvre",
+                    "Monitor-Signal-Move",
+                    "Mirror-Speed-Manoeuvre"
+                ],
+                correct: 1,
+                explanation: "MSM stands for Mirror-Signal-Manoeuvre, the essential routine for safe driving."
+            },
+            {
+                question: "If you're in the wrong lane approaching a roundabout, what should you do?",
+                options: [
+                    "Cut across to the correct lane immediately",
+                    "Stop and reverse",
+                    "Continue in your current lane if it's safe and legal",
+                    "Sound your horn and force your way across"
+                ],
+                correct: 2,
+                explanation: "If in the wrong lane, it's safer to continue in your current lane (if legal) rather than cut across traffic."
+            },
+            {
+                question: "On a multi-lane roundabout, what determines which lane you should use?",
+                options: [
+                    "Your preference",
+                    "Traffic density",
+                    "Road signs and markings",
+                    "The lane with fewer cars"
+                ],
+                correct: 2,
+                explanation: "Always follow road signs and lane markings - they show the correct lane for each exit."
+            },
+            {
+                question: "What is the main purpose of roundabouts?",
+                options: [
+                    "To confuse drivers",
+                    "To keep traffic moving smoothly and reduce accidents",
+                    "To test driving skills",
+                    "To replace all traffic lights"
+                ],
+                correct: 1,
+                explanation: "Roundabouts are designed to keep traffic flowing smoothly and are statistically safer than traditional junctions."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function startQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('restartBtn').style.display = 'none';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= quizQuestions.length) {
+                showResults();
+                return;
+            }
+
+            answered = false;
+            const question = quizQuestions[currentQuestion];
+            const container = document.getElementById('quizContainer');
+            
+            container.innerHTML = `
+                <div class="question-card">
+                    <h3>Question ${currentQuestion + 1} of ${quizQuestions.length}</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 1rem;">${question.question}</p>
+                    <ul class="answer-options" id="answerOptions">
+                        ${question.options.map((option, index) => 
+                            `<li onclick="selectAnswer(${index})" data-index="${index}">${option}</li>`
+                        ).join('')}
+                    </ul>
+                    <div id="explanation" style="display: none; margin-top: 1rem; padding: 1rem; background: #e3f2fd; border-radius: 10px;">
+                        <strong>Explanation:</strong> <span id="explanationText"></span>
+                    </div>
+                </div>
+            `;
+
+            updateProgress();
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (answered) return;
+            
+            answered = true;
+            const question = quizQuestions[currentQuestion];
+            const options = document.querySelectorAll('.answer-options li');
+            
+            options.forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && index !== question.correct) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            if (selectedIndex === question.correct) {
+                score++;
+            }
+
+            document.getElementById('explanationText').textContent = question.explanation;
+            document.getElementById('explanation').style.display = 'block';
+            document.getElementById('nextBtn').style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            document.getElementById('nextBtn').style.display = 'none';
+            showQuestion();
+        }
+
+        function showResults() {
+            const container = document.getElementById('quizContainer');
+            const percentage = Math.round((score / quizQuestions.length) * 100);
+            let message = '';
+            let color = '';
+
+            if (percentage >= 80) {
+                message = 'Excellent! You\'re ready for roundabouts! 🎉';
+                color = '#28a745';
+            } else if (percentage >= 60) {
+                message = 'Good work! Review the areas you missed. 👍';
+                color = '#ffc107';
+            } else {
+                message = 'Keep studying! Practice makes perfect. 📚';
+                color = '#dc3545';
+            }
+
+            container.innerHTML = `
+                <div class="question-card" style="text-align: center;">
+                    <h3>Quiz Complete!</h3>
+                    <div style="font-size: 3rem; margin: 1rem 0;">${percentage}%</div>
+                    <p style="font-size: 1.2rem; color: ${color}; font-weight: bold;">${message}</p>
+                    <p>You got ${score} out of ${quizQuestions.length} questions correct.</p>
+                </div>
+            `;
+
+            document.getElementById('restartBtn').style.display = 'inline-block';
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const percentage = Math.round((currentQuestion / quizQuestions.length) * 100);
+            
+            progressFill.style.width = percentage + '%';
+            progressText.textContent = `Question ${currentQuestion} of ${quizQuestions.length} - ${percentage}% Complete`;
+        }
+
+        // Initialize the quiz
+        startQuiz();
+
+        // Initialize visual quiz on page load
+        function initializeVisualQuiz() {
+            document.getElementById('startVisualQuizBtn').style.display = 'inline-block';
+            document.getElementById('nextVisualBtn').style.display = 'none';
+            document.getElementById('restartVisualBtn').style.display = 'none';
+            document.getElementById('visualQuizScore').style.display = 'none';
+            document.getElementById('visualQuizFeedback').style.display = 'none';
+        }
+
+        // Visual Quiz functionality
+        const visualQuizQuestions = [
+            {
+                exit: 1,
+                exitName: "1st Exit (Left Turn)",
+                question: "You want to turn LEFT at this roundabout. Which lane should you use?",
+                correctLane: "left",
+                explanation: "For the 1st exit (left turn), always use the LEFT lane and signal left throughout.",
+                signal: "Signal left on approach and keep signalling left until you exit."
+            },
+            {
+                exit: 2,
+                exitName: "2nd Exit (Straight Ahead)",
+                question: "You want to go STRAIGHT AHEAD at this roundabout. Which lane should you use?",
+                correctLane: "left",
+                explanation: "For the 2nd exit (straight ahead), use the LEFT lane unless road markings indicate otherwise.",
+                signal: "No signal on approach, then signal left after passing the 1st exit."
+            },
+            {
+                exit: 3,
+                exitName: "3rd Exit (Right Turn)",
+                question: "You want to turn RIGHT at this roundabout. Which lane should you use?",
+                correctLane: "right",
+                explanation: "For the 3rd exit (right turn), use the RIGHT lane.",
+                signal: "Signal right on approach, then signal left after passing the 2nd exit."
+            },
+            {
+                exit: 1,
+                exitName: "1st Exit (Left Turn) - Test Again",
+                question: "Another left turn scenario. Which lane for the 1st exit?",
+                correctLane: "left",
+                explanation: "Left turns always require the LEFT lane - this is consistent across all roundabouts.",
+                signal: "Left signal throughout the entire manoeuvre."
+            },
+            {
+                exit: 4,
+                exitName: "4th Exit (Sharp Right/U-Turn)",
+                question: "You need to take the 4th exit (almost a U-turn). Which lane should you use?",
+                correctLane: "right",
+                explanation: "For exits beyond the 3rd (like 4th exit), use the RIGHT lane as this is essentially a U-turn.",
+                signal: "Signal right on approach, then signal left after passing the 3rd exit."
+            },
+            {
+                exit: 2,
+                exitName: "2nd Exit (Straight) - Confirm",
+                question: "Going straight ahead again. Confirm the correct lane:",
+                correctLane: "left",
+                explanation: "Straight ahead typically uses the LEFT lane, but always check road markings for exceptions.",
+                signal: "No signal on approach, signal left after the 1st exit."
+            },
+            {
+                exit: 3,
+                exitName: "3rd Exit (Right) - Final Test",
+                question: "One more right turn. Which lane do you choose?",
+                correctLane: "right",
+                explanation: "Right turns (3rd exit and beyond) always require the RIGHT lane.",
+                signal: "Right signal on approach, change to left signal before your exit."
+            },
+            {
+                exit: 1,
+                exitName: "1st Exit (Left) - Master Check",
+                question: "Final question: Left turn at 1st exit. Which lane?",
+                correctLane: "left",
+                explanation: "Perfect! Left exits always use the LEFT lane. You've mastered the basics!",
+                signal: "Signal left from approach to exit - simple and consistent."
+            }
+        ];
+
+        let currentVisualQuestion = 0;
+        let visualScore = 0;
+        let visualAnswered = false;
+
+        function startVisualQuiz() {
+            currentVisualQuestion = 0;
+            visualScore = 0;
+            visualAnswered = false;
+            document.getElementById('startVisualQuizBtn').style.display = 'none';
+            document.getElementById('nextVisualBtn').style.display = 'none';
+            document.getElementById('restartVisualBtn').style.display = 'none';
+            document.getElementById('visualQuizScore').style.display = 'none';
+            showVisualQuestion();
+        }
+
+        function showVisualQuestion() {
+            if (currentVisualQuestion >= visualQuizQuestions.length) {
+                showVisualResults();
+                return;
+            }
+
+            visualAnswered = false;
+            const question = visualQuizQuestions[currentVisualQuestion];
+            
+            // Reset visual elements
+            resetVisualElements();
+            
+            // Highlight target exit
+            const targetExit = document.getElementById(`quizExit${question.exit}`);
+            targetExit.classList.add('target-exit');
+            
+            // Update question
+            document.getElementById('visualQuizQuestion').textContent = question.question;
+            
+            // Hide feedback
+            document.getElementById('visualQuizFeedback').style.display = 'none';
+            
+            updateVisualProgress();
+        }
+
+        function resetVisualElements() {
+            // Reset all exits
+            document.querySelectorAll('.quiz-exit-marker').forEach(exit => {
+                exit.classList.remove('target-exit');
+            });
+            
+            // Reset all lanes
+            document.querySelectorAll('.lane').forEach(lane => {
+                lane.classList.remove('selected', 'correct', 'incorrect');
+                lane.style.pointerEvents = 'auto';
+            });
+        }
+
+        function selectLane(selectedLane) {
+            if (visualAnswered) return;
+            
+            visualAnswered = true;
+            const question = visualQuizQuestions[currentVisualQuestion];
+            const leftLane = document.getElementById('leftLane');
+            const rightLane = document.getElementById('rightLane');
+            const feedback = document.getElementById('visualQuizFeedback');
+            
+            // Disable clicking
+            document.querySelectorAll('.lane').forEach(lane => {
+                lane.style.pointerEvents = 'none';
+            });
+            
+            // Show selection
+            if (selectedLane === 'left') {
+                leftLane.classList.add('selected');
+            } else {
+                rightLane.classList.add('selected');
+            }
+            
+            // Check answer after a short delay
+            setTimeout(() => {
+                const isCorrect = selectedLane === question.correctLane;
+                
+                if (isCorrect) {
+                    visualScore++;
+                    if (selectedLane === 'left') {
+                        leftLane.classList.remove('selected');
+                        leftLane.classList.add('correct');
+                    } else {
+                        rightLane.classList.remove('selected');
+                        rightLane.classList.add('correct');
+                    }
+                    feedback.className = 'quiz-feedback correct';
+                    feedback.innerHTML = `
+                        <h4>✅ Correct!</h4>
+                        <p><strong>${question.explanation}</strong></p>
+                        <p><em>Signalling: ${question.signal}</em></p>
+                    `;
+                } else {
+                    if (selectedLane === 'left') {
+                        leftLane.classList.remove('selected');
+                        leftLane.classList.add('incorrect');
+                        rightLane.classList.add('correct');
+                    } else {
+                        rightLane.classList.remove('selected');
+                        rightLane.classList.add('incorrect');
+                        leftLane.classList.add('correct');
+                    }
+                    feedback.className = 'quiz-feedback incorrect';
+                    feedback.innerHTML = `
+                        <h4>❌ Incorrect</h4>
+                        <p><strong>Correct answer: ${question.correctLane.toUpperCase()} lane</strong></p>
+                        <p>${question.explanation}</p>
+                        <p><em>Signalling: ${question.signal}</em></p>
+                    `;
+                }
+                
+                feedback.style.display = 'block';
+                document.getElementById('nextVisualBtn').style.display = 'inline-block';
+                
+                // Update score display
+                document.getElementById('visualQuizScore').style.display = 'block';
+                document.getElementById('visualScoreDisplay').textContent = `${visualScore}/${currentVisualQuestion + 1}`;
+                
+            }, 800);
+        }
+
+        function nextVisualQuestion() {
+            currentVisualQuestion++;
+            document.getElementById('nextVisualBtn').style.display = 'none';
+            showVisualQuestion();
+        }
+
+        function showVisualResults() {
+            const question = document.getElementById('visualQuizQuestion');
+            const feedback = document.getElementById('visualQuizFeedback');
+            const percentage = Math.round((visualScore / visualQuizQuestions.length) * 100);
+            
+            // Reset visual elements
+            resetVisualElements();
+            
+            let message = '';
+            let color = '';
+            let title = '';
+
+            if (percentage >= 90) {
+                title = '🏆 Outstanding!';
+                message = 'You\'ve mastered roundabout lane selection! You\'re ready for your test!';
+                color = '#28a745';
+            } else if (percentage >= 75) {
+                title = '🎉 Excellent!';
+                message = 'Great job! You understand roundabout lane selection very well!';
+                color = '#28a745';
+            } else if (percentage >= 60) {
+                title = '👍 Good Work!';
+                message = 'You\'re on the right track! Review the questions you missed and try again.';
+                color = '#ffc107';
+            } else {
+                title = '📚 Keep Practicing!';
+                message = 'Don\'t worry - roundabouts take practice! Review the rules and try the quiz again.';
+                color = '#dc3545';
+            }
+
+            question.textContent = 'Visual Quiz Complete!';
+            feedback.className = 'quiz-feedback correct';
+            feedback.innerHTML = `
+                <div style="text-align: center;">
+                    <h3>${title}</h3>
+                    <div style="font-size: 2.5rem; margin: 1rem 0; color: ${color}">${percentage}%</div>
+                    <p style="font-size: 1.2rem; color: ${color}; font-weight: bold;">${message}</p>
+                    <p>You got ${visualScore} out of ${visualQuizQuestions.length} questions correct.</p>
+                    <br>
+                    <div style="text-align: left; background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                        <h4>Quick Reminder:</h4>
+                        <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                            <li><strong>1st Exit (Left):</strong> Left lane + Left signal throughout</li>
+                            <li><strong>2nd Exit (Straight):</strong> Left lane + Signal left after 1st exit</li>
+                            <li><strong>3rd+ Exit (Right):</strong> Right lane + Right signal, then left before exit</li>
+                            <li><strong>Always:</strong> Give way to traffic from the right!</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            feedback.style.display = 'block';
+            
+            document.getElementById('restartVisualBtn').style.display = 'inline-block';
+            updateVisualProgress();
+        }
+
+        function updateVisualProgress() {
+            const progressFill = document.getElementById('visualProgressFill');
+            const progressText = document.getElementById('visualProgressText');
+            const percentage = Math.round((currentVisualQuestion / visualQuizQuestions.length) * 100);
+            
+            progressFill.style.width = percentage + '%';
+            progressText.textContent = `Question ${currentVisualQuestion} of ${visualQuizQuestions.length} - ${percentage}% Complete`;
+        }
+
+        // Initialize visual quiz when page loads
+        initializeVisualQuiz();
+    </script>
+</body>
+</html> 
